@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: pipeline-example
+
+config:
+  message: ${MSG_VALUE:Default Hello World}
