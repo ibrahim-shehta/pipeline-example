@@ -87,11 +87,19 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /
-    port: http
+    port: 8080
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 3
 readinessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /  # Assuming you set this to root; change to /hello if that's your endpoint
+    port: 8080
+  initialDelaySeconds: 60  # Start probing after 60 seconds (increase to 90 if still failing)
+  periodSeconds: 10        # Probe every 10 seconds
+  timeoutSeconds: 5        # Wait 5 seconds for response
+  successThreshold: 1      # 1 success to mark ready
+  failureThreshold: 10     # Allow 10 failures before unready (gives more grace)
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
